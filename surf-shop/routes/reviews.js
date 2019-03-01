@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
   
 /* post reviews create : /posts/:id/reviews  */
 router.post('/', (req, res, next) => {
-    res.send("CREATE /posts/:id/reviews/new");
+    res.send("CREATE /posts/:id/reviews");
   });  
 
 /* GET reviews edit : /posts/:id/reviews/:review_id/edit  */
