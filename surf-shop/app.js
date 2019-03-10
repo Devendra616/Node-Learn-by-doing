@@ -38,8 +38,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'w1sh Me Dude!',
   resave: false,
-  saveUninitialized: true  
+  saveUninitialized: true 
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //session must be before passport
 passport.use(User.createStrategy());
