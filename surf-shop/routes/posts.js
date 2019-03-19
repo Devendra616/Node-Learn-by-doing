@@ -1,20 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const { errorHandler } = require('../middlewares'); //index by default
+const {getPosts,newPost, createPost} = require('../controllers/post');
 
 /* GET posts index : /post  */
-router.get('/', (req, res, next) => {
-    res.send("INDEX /posts");
-  });
+router.get('/', errorHandler(getPosts));
   
 /* GET posts new : /post/new  */
-router.get('/new', (req, res, next) => {
-    res.send("NEW /posts/new");
-  });
+router.get('/new', newPost); //errorHandler reqd for aync functions
   
 /* POST posts create : /posts  */
-router.post('/new', (req, res, next) => {
-    res.send("CREATE /posts");
-  });
+router.post('/', errorHandler(createPost));
   
 /* GET posts show : /post/:id  */
 router.get('/:id', (req, res, next) => {
