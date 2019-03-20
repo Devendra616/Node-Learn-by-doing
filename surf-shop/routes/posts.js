@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { errorHandler } = require('../middlewares'); //index by default
-const {getPosts,newPost, createPost} = require('../controllers/post');
+const {getPosts,newPost, createPost, showPost} = require('../controllers/post');
 
 /* GET posts index : /post  */
 router.get('/', errorHandler(getPosts));
@@ -13,9 +13,7 @@ router.get('/new', newPost); //errorHandler reqd for aync functions
 router.post('/', errorHandler(createPost));
   
 /* GET posts show : /post/:id  */
-router.get('/:id', (req, res, next) => {
-    res.send("SHOW /posts/:id");
-  });
+router.get('/:id', errorHandler(showPost));
   
 /* GET posts edit : /post/:id/edit  */
 router.get('/:id/edit', (req, res, next) => {
