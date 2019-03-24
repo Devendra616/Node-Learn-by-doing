@@ -5,6 +5,7 @@ const PostSchema = new Schema({
     title: String,
     price: String,
     description: String,  
+    images:[{url:String, public_id:String}], //url allows to display file correctly on view, pubicid for refering to image on cloud and search,delete etc
     location: String,
     lat: Number,
     lng: Number,
