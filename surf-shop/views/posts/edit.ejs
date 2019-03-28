@@ -2,16 +2,16 @@
 <h1>Edit Post <%=post.title %></h1>
 
 
-<form action="/posts/<%= post.id %>?_method=PUT" method="POST" id="postEditForm">
+<form action="/posts/<%= post.id %>?_method=PUT" method="POST" id="postEditForm" enctype="multipart/form-data">
     <input type="text" name='post[title]' placeholder="Title" value="<%=post.title %>">
     <input type="text" name='post[price]' placeholder="Price" value='<%= post.price %>'>
    <div> 
-       <input type="file" name="imagesUpload" id="imageUpload" accept="images/*" multiple />
+       <input type="file" name="images" id="imageUpload" accept="images/*" multiple />
         <div>
             <% post.images.forEach(function(image,i){ %>
                  <img src="<%= image.url %>" width="80px"/>
                  <label for="image<%= i %>">Delete?</label>
-                 <input type="checkbox" id="image<%= i %>" name="deleteImage" class="imageDeleteCheckbox" value="<%= image.public_id %>">
+                 <input type="checkbox" id="image<%= i %>" name="deleteImages[]" class="imageDeleteCheckbox" value="<%= image.public_id %>">
             <%  }); %>
         </div>
     </div>
@@ -36,7 +36,7 @@
         if(newTotal >4 ){
             event.preventDefault();
             let removeAmt = newTotal - 4;   
-            alert(`You need to remove atleast ${removeAmt} image${removeAmt ===1?'':'s'}`);
+            alert(`You need to remove atleast ${removeAmt} (more) image${removeAmt ===1?'':'s'}`);
 
         }
  });

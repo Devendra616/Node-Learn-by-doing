@@ -12,7 +12,7 @@ router.get('/', asyncErrorHandler(postIndex));
 router.get('/new', postNew); //errorHandler reqd for aync functions
   
 /* POST posts create : /posts  */
-router.post('/',upload.array('imagesUpload',4),asyncErrorHandler(postCreate));
+router.post('/',upload.array('images',4),asyncErrorHandler(postCreate));
   
 /* GET posts show : /post/:id  */
 router.get('/:id', asyncErrorHandler(postShow));
@@ -21,7 +21,7 @@ router.get('/:id', asyncErrorHandler(postShow));
 router.get('/:id/edit', asyncErrorHandler(postEdit));
   
 /* PUT posts update : /post/:id  */
-router.put('/:id', asyncErrorHandler(postUpdate));
+router.put('/:id', upload.array('images',4),asyncErrorHandler(postUpdate));
   
  /* DELETE posts destroy : /post/:id  */
 router.delete('/:id', asyncErrorHandler(postDestroy)); 
