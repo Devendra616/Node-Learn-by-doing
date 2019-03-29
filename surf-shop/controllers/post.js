@@ -97,7 +97,7 @@ module.exports= {
         for(image of post.images){
             await cloudinary.v2.uploader.destroy(image.public_id);
         }
-        post.remove();
+        await post.remove();
         res.redirect("/posts");
     }
 }
