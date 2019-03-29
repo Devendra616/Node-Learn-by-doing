@@ -93,11 +93,22 @@ module.exports= {
                 });
              }
         }
+        //if location in form is different from location saved then update coordinates
+        if(req.body.post.location != post.location){
+            let response = await geocodingClient
+            .forwardGeocode({
+                 query: req.body.post.location,
+                 limit: 1       
+            })
+            .send();
+            post.location = req.body.post.location;
+            post.coordinates =response.body.features[0].geometry.coordinates;
+        }
         // update the post with any new properties          
         post.title = req.body.post.title;
         post.description = req.body.post.description;
         post.price = req.body.post.price;
-        post.location = req.body.post.location;
+        
         // save the updated post into the db
         post.save();
         // redirect to show page               
