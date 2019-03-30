@@ -27,3 +27,7 @@
 - Update post-route error handling middleware to console.log() the full err, then set err.message on req.session.error and redirect('back')
 - Create a partial for flash messages and include it in our layouts
 - Write some success messages and throw some errors to test it out
+
+# Curl
+- curl -d "username=ian&password=ian" -X POST http://localhost:3000/register
+  Works like postman. -d has parameters seperated by &, -X for get/post method

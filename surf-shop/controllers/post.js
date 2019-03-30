@@ -50,7 +50,11 @@ module.exports= {
     async postShow(req,res,next){        
         let post = await Post.findById(req.params.id).populate({
             path:'reviews',
-            options:{sort:{'_id':-1}}//-ve for decending and +ve for asc
+            options:{sort:{'_id':-1}},  /*-ve for decending and +ve for asc */
+            populate : {
+                path: 'author',
+                model:'User'
+            }
         });        
         res.render('posts/show',{post, title:post.title});
     },

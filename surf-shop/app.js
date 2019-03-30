@@ -59,6 +59,8 @@ passport.deserializeUser(User.deserializeUser());
 
 //title middleware before mounting routes
 app.use((req,res,next)=>{
+  req.user = { '_id' : '5c9fc8f704233c24e0601479', 'username' : 'ian'};
+  res.locals.currentUser = req.user;
   //sets default title for pages
   res.locals.title = 'Surf Shop';
   //set success flash message
