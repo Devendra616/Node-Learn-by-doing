@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title><%= title %></title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
@@ -12,6 +12,7 @@
    <link rel="stylesheet" href="/stylesheets/post-show.css">
 </head>
 <body>
+    <% include ../partials/navbar %>
     <%- body -%>
     <script>
         let post = <%- JSON.stringify(post) %>;        

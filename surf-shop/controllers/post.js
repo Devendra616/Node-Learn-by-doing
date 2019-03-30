@@ -14,12 +14,12 @@ module.exports= {
     //post index
     async postIndex(req,res,next){
         let posts =  await Post.find({});
-        res.render('posts/index',{posts});
+        res.render('posts/index',{posts, title:'Post Index'});
     },
 
     //Post New
     postNew(req,res,next){
-        res.render('posts/new');
+        res.render('posts/new', {title:'Post New'});
     },
 
     //Post Create
@@ -48,7 +48,7 @@ module.exports= {
     //Post Show 
     async postShow(req,res,next){
         let post = await Post.findById(req.params.id);        
-        res.render('posts/show',{post});
+        res.render('posts/show',{post, title:post.title});
     },
     
     //Post Edit
