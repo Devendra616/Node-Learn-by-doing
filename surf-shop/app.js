@@ -20,7 +20,7 @@ const reviewsRouter = require('./routes/reviews');
 
 const app = express();
 //connect to the database
-mongoose.connect('mongodb://localhost/surf-shop-mapbox',{useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/surf-shop',{useNewUrlParser: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open',() =>{
