@@ -59,7 +59,15 @@ passport.deserializeUser(User.deserializeUser());
 
 //title middleware before mounting routes
 app.use((req,res,next)=>{
-  res.locals.title = 'Surf Shop';//sets default title
+  //sets default title for pages
+  res.locals.title = 'Surf Shop';
+  //set success flash message
+  res.locals.success = req.session.success || ''; //if success not set in req then empty
+  delete req.session.success; //delete after assignment
+  //set error flash message
+  res.locals.error = req.session.error || ''; //if success not set in req then empty
+  delete req.session.error; //delete after assignment
+  //continue to next function in middleware
   next();
 })
 
@@ -75,13 +83,16 @@ app.use(function(req, res, next) {
 
 // error handler by express for default usage
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  /* // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error'); */
+  console.log(err);
+  req.session.error = err.message;
+  res.redirect('back');
 });
 
 module.exports = app;
