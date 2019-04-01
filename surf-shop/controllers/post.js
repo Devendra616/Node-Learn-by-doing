@@ -119,7 +119,8 @@ module.exports= {
         
         // save the updated post into the db
         post.save();
-        // redirect to show page               
+        // redirect to show page    
+        req.session.success = 'Post updated Successfully!';
         res.redirect(`/posts/${post.id}`);
     },
 
@@ -130,6 +131,7 @@ module.exports= {
             await cloudinary.v2.uploader.destroy(image.public_id);
         }
         await post.remove();
+        req.session.success = 'Post deleted Successfully!';
         res.redirect("/posts");
     }
 }

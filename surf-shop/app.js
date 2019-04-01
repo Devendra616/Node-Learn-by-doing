@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const favicon = require('serve-favicon');
 const createError = require('http-errors');
 const express = require('express');
 const engine = require('ejs-mate');
@@ -19,6 +20,9 @@ const postsRouter = require('./routes/posts');
 const reviewsRouter = require('./routes/reviews');
 
 const app = express();
+
+app.use(favicon(path.join(__dirname,'public','images','shop.png')));
+
 //connect to the database
 mongoose.connect('mongodb://localhost/surf-shop',{useNewUrlParser: true});
 const db = mongoose.connection;
