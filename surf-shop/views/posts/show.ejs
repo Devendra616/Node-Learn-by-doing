@@ -38,6 +38,7 @@
         <%= review.body %><br>
         Rating: <%= review.rating %>
     </div>
+    <% if(review.author.equals(currentUser._id)){ %>        
     <div>
         <button class="toggle-edit-form">Edit</button>
         <form action="/posts/<%= post.id %>/reviews/<%= review.id %>?_method=PUT" method="POST" class="edit-review-form">
@@ -46,12 +47,6 @@
             <input type="submit" value="Update Review">
         </form>
     </div>
+   <% } %>
     <hr>
 <% });  %>
-<script>
- $(".toggle-edit-form").on('click',function(){
-    //toggle the dispaly text of button
-    $(this).text() === "Edit"?$(this).text('Cancel'):$(this).text('Edit');
-    $(this).siblings('.edit-review-form').toggle()
- });
-</script>
