@@ -6,6 +6,22 @@
     <div>Price: <%= post.price %></div>
     <div>Description: <%= post.description %></div>
     <div>Location: <%= post.location %></div>
+    
+    <div>
+        <% for(let i=0;i < 5;i++) { %>
+         <%   if(i< floorRating){ %>
+            <!-- display full star -->
+            <i class="fas fa-star"></i>
+        <%   } else if(post.avgRating - i>0 && post.avgRating - i < 1){ %>
+            <!-- display half star -->
+            <i class="fas fa-star-half-alt"></i>
+        <%   } else { %>
+            <!-- display no star -->
+            <i class="far fa-star"></i>
+        <%   } %>
+        <%}%>
+        <%= `${post.avgRating} star${post.avgRating == 1?'':'s'}` %>
+    </div>
     <div>
         <% post.images.forEach( function(image){ %>
             <img src="<%= image.url %>" alt="Surf board image" width="200px">

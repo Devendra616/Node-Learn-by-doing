@@ -10,7 +10,8 @@ async function seedPosts(){
             author: { '_id' : '5c9fc8f704233c24e0601479', 
                       'username' : 'ian'
                     },
-            price: faker.commerce.price()
+            price: faker.commerce.price(),
+            coordinates :[-122.0842499, 37.4224764],
             
         }
         await Post.create(post);

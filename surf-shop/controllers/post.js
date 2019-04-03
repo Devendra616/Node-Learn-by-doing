@@ -60,7 +60,8 @@ module.exports= {
                 model:'User'
             }
         });        
-        res.render('posts/show',{post, title:post.title});
+        const floorRating = post.calculateAvgRating();
+        res.render('posts/show',{post, title:post.title, floorRating});
     },
     
     //Post Edit
