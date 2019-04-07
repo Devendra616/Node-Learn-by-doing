@@ -2,7 +2,8 @@ const Post = require('../models/post');
 require('dotenv').config();
 
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-const geocodingClient = mbxGeocoding({ accessToken: process.env.MAPBOX_TOKEN });
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken: mapBoxToken });
 const cloudinary = require('cloudinary');
 cloudinary.config({
     cloud_name: 'nmdc',
@@ -15,10 +16,11 @@ module.exports= {
     async postIndex(req,res,next){
         let posts =  await Post.paginate({},{
             page: req.query.page || 1,
-            limit:10
+            limit:10,
+            sort:{'_id':-1} //sort by id desc
         });
         posts.page = Number(posts.page);
-        res.render('posts/index',{posts, title:'Post Index'});
+        res.render('posts/index',{posts,mapBoxToken , title:'Post Index'});
     },
 
     //Post New
@@ -43,9 +45,11 @@ module.exports= {
        })
        .send();
        
-       req.body.post.coordinates = response.body.features[0].geometry.coordinates;
+       req.body.post.geometry = response.body.features[0].geometry;
        console.log(req.body.post.coordinates);
-       let post = await Post.create(req.body.post);
+       let post = new Post(req.body.post);
+	   post.properties.description = `<strong><a href="/posts/${post._id}">${post.title}</a></strong><p>${post.location}</p><p>${post.description.substring(0, 20)}...</p>`;
+	   post.save();
        req.session.success = 'Post created successfully!';
        res.redirect(`/posts/${post.id}`);
     },
@@ -61,7 +65,7 @@ module.exports= {
             }
         });        
         const floorRating = post.calculateAvgRating();
-        res.render('posts/show',{post, title:post.title, floorRating});
+        res.render('posts/show',{post, title:post.title, mapBoxToken,floorRating});
     },
     
     //Post Edit
@@ -115,13 +119,13 @@ module.exports= {
             })
             .send();
             post.location = req.body.post.location;
-            post.coordinates =response.body.features[0].geometry.coordinates;
+            post.geometry =response.body.features[0].geometry;
         }
         // update the post with any new properties          
         post.title = req.body.post.title;
         post.description = req.body.post.description;
         post.price = req.body.post.price;
-        
+        post.properties.description = `<strong><a href="/posts/${post._id}">${post.title}</a></strong><p>${post.location}</p><p>${post.description.substring(0, 20)}...</p>`;
         // save the updated post into the db
         post.save();
         // redirect to show page    

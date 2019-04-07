@@ -9,7 +9,20 @@ const PostSchema = new Schema({
     description: String,  
     images:[{url:String, public_id:String}], //url allows to display file correctly on view, pubicid for refering to image on cloud and search,delete etc
     location: String,
-    coordinates: Array,
+    geometry:{
+        type:{
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type:[Number],
+            required:true
+        }
+    },
+    properties:{
+        description: String
+    },   
     author: {
         type: Schema.Types.ObjectId,
         ref: "User"
