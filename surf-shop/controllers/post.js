@@ -4,12 +4,8 @@ require('dotenv').config();
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapBoxToken });
-const cloudinary = require('cloudinary');
-cloudinary.config({
-    cloud_name: 'nmdc',
-    api_key:'262191713656249',
-    api_secret: process.env.CLOUDINARY_SECRET
-})
+const { cloudinary } = require('../cloudinary');
+
 
 module.exports= {
     //post index
@@ -31,13 +27,12 @@ module.exports= {
     //Post Create
     async postCreate(req,res,next){
         req.body.post.images = [];
-       for(const file of req.files){
-          let image = await cloudinary.v2.uploader.upload(file.path);
-          req.body.post.images.push({
-              url: image.secure_url,
-              public_id: image.public_id
-          });
-       }
+        for(const file of req.files) {
+            req.body.post.images.push({
+                url: file.secure_url,
+                public_id: file.public_id
+            });
+        }
        let response = await geocodingClient
        .forwardGeocode({
             query: req.body.post.location,
@@ -98,18 +93,17 @@ module.exports= {
             }
         }
 
-        // check if there are any new images for upload  
-        if(req.files) {
-            //upload images
-            for(const file of req.files){
-                let image = await cloudinary.v2.uploader.upload(file.path);
-                // add images to post.images array
-                post.images.push({
-                    url: image.secure_url,
-                    public_id: image.public_id
-                });
-             }
-        }
+        	// check if there are any new images for upload
+		if(req.files) {
+			// upload images
+			for(const file of req.files) {
+				// add images to post.images array
+				post.images.push({
+					url: file.secure_url,
+					public_id: file.public_id
+				});
+			}
+		}
         //if location in form is different from location saved then update coordinates
         if(req.body.post.location != post.location){
             let response = await geocodingClient
