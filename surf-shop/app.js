@@ -65,10 +65,10 @@ passport.deserializeUser(User.deserializeUser());
 
 //title middleware before mounting routes
 app.use((req,res,next)=>{
-  req.user = { '_id' : '5ca1f9491d631b0100e0e188', 'username' : 'ian2'
-    //'_id' : '5ca3bf0c82c01622280e2e0d', 'username' : 'ian4'
-     //'_id' : '5ca3bf1782c01622280e2e0e', 'username' : 'ian5'
-    };
+  // req.user = { '_id' : '5ca1f9491d631b0100e0e188', 'username' : 'ian2'
+  //   //'_id' : '5ca3bf0c82c01622280e2e0d', 'username' : 'ian4'
+  //    //'_id' : '5ca3bf1782c01622280e2e0e', 'username' : 'ian5'
+  //   };
   res.locals.currentUser = req.user;
   //sets default title for pages
   res.locals.title = 'Surf Shop';

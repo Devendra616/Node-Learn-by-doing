@@ -1,24 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { postRegister, postLogin, getLogout, landingPage} = require('../controllers/index');
-const { asyncErrorHandler } = require('../middlewares/index');
+const { postRegister, postLogin, getLogout, landingPage, getRegister, getLogin} = require('../controllers/index');
+const { asyncErrorHandler,checkIfUserExist } = require('../middlewares/index');
 
 
 /* GET home/landing page. */
 router.get('/', asyncErrorHandler(landingPage));
 
 /* Get register */
-router.get('/register', (req, res, next) => {
-  res.send("GET Register")
-});
+router.get('/register', getRegister);
 
 /* Post register */
-router.post('/register', asyncErrorHandler(postRegister));
+router.post('/register',
+            asyncErrorHandler(checkIfUserExist), 
+            asyncErrorHandler(postRegister)
+);
 
 /* Get LOGIN */
-router.get('/login', (req, res, next) => {
-  res.send("GET Login")
-});
+router.get('/login', getLogin);
 
 /* Post LOGIN */
 router.post('/login',postLogin);
