@@ -37,11 +37,21 @@ module.exports = {
         res.render('login',{title:'Login'});
     },
     //POST Login
-    postLogin(req,res,next){
-        passport.authenticate('local', {
-            successRedirect: '/',
-            failureRedirect: '/login'
-          })(req,res,next);
+    async postLogin(req,res,next){
+        const {username, password} = req.body;
+        const {user, error} = await User.authenticate()(username,password);
+        if(!user && error){
+            return next(error);
+        }
+        req.login(user,function(err){
+            if(err){
+                return next(err);
+            }
+            req.session.success = `Welcome back, ${user.username}!`;
+            const redirectUrl = req.session.redirectTo||'/';
+            delete req.session.redirectTo;
+            res.redirect(redirectUrl);
+        });
     },
 
     getLogout(req,res,next){       
