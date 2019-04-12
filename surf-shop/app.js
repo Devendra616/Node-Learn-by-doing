@@ -23,7 +23,7 @@ const reviewsRouter = require('./routes/reviews');
 
 const app = express();
 
-app.use(favicon(path.join(__dirname,'public','images','shop.png')));
+app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 
 //connect to the database
 mongoose.connect('mongodb://localhost/surf-shop',{useNewUrlParser: true});
