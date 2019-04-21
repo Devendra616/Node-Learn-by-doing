@@ -6,7 +6,6 @@ const express = require('express');
 const engine = require('ejs-mate');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require("express-session");
 const logger = require('morgan');
@@ -26,7 +25,7 @@ const app = express();
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 
 //connect to the database
-mongoose.connect('mongodb://localhost/surf-shop',{useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/surf-shop',{useNewUrlParser: true, useCreateIndex:true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open',() =>{
@@ -43,8 +42,8 @@ app.use(express.static('public'))
 
 
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json()); //body-parser is now part of express inbuilt
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));

@@ -41,6 +41,7 @@ module.exports = {
         if(req.isAuthenticated()) {
             return res.redirect('/');
         }        
+        if(req.query.returnTo) req.session.redirectTo = req.headers.referer;//used to redirect to review if not logged in before add review
         res.render('login',{title:'Login'});
     },
     //POST Login
@@ -55,14 +56,18 @@ module.exports = {
                 return next(err);
             }
             req.session.success = `Welcome back, ${user.username}!`;
-            const redirectUrl = req.session.redirectTo||'/';
+            const redirectUrl = req.session.redirectTo||'/'; //used in view/show add review
             delete req.session.redirectTo;
             res.redirect(redirectUrl);
         });
     },
-
+    //GET /logout
     getLogout(req,res,next){       
             req.logout();
             res.redirect('/');
-    }  
+    },
+    async getProfile(req,res,next) {
+        const posts = Post.find().where('author').equals(req.user._id).limit(10).exec();
+        res.render('profile',{posts});
+    }
 } 

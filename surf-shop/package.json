@@ -9,17 +9,17 @@
     "@mapbox/mapbox-sdk": "^0.6.0",
     "body-parser": "^1.18.3",
     "cloudinary": "^1.14.0",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "ejs": "~2.5.7",
+    "cookie-parser": "~1.4.4",
+    "debug": "~4.1.1",
+    "ejs": "~2.6.1",
     "ejs-mate": "^3.0.0",
     "express": "^4.16.4",
     "faker": "^4.1.0",
-    "http-errors": "~1.6.2",
+    "http-errors": "~1.7.2",
     "method-override": "^3.0.0",
-    "mongoose": "^5.4.20",
+    "mongoose": "^5.5.1",
     "mongoose-paginate": "^5.0.3",
-    "morgan": "~1.9.0",
+    "morgan": "~1.9.1",
     "multer": "^1.4.1",
     "multer-storage-cloudinary": "^2.2.1",
     "npm": "^6.9.0",
@@ -30,7 +30,7 @@
     "update": "^0.7.4"
   },
   "devDependencies": {
-    "dotenv": "^6.2.0",
-    "locus": "^1.2.0"
+    "dotenv": "^7.0.0",
+    "locus": "^2.0.1"
   }
 }

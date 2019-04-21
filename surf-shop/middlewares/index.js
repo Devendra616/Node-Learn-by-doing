@@ -10,7 +10,7 @@ module.exports = {
         },
     isReviewAuthor: async(req,res,next) => {
         let review = await Review.findById(req.params.review_id);
-        if(review.author.equals(req.user._id)){ //currentUser is in frontend
+        if(req.user && (review.author.equals(req.user._id))) { //currentUser is in frontend
             return next();
         }
         req.session.error = "Bye bye";
@@ -31,5 +31,17 @@ module.exports = {
         }
         req.session.error = 'Access denied!';
         res.redirect('back');
+    },
+    isValidPassword: async (req,res,next) => {
+        const {user} = await User.authenticate()(req.user.username, req.body.currentPassword);
+        if(user){
+            //add user to res.user to let it accessible everywhere
+            res.locals.user = user;
+            return next();
+        } else{
+            req.session.error = "Incorrect current password!";
+            return res.redirect("/profile");
+        }
+        
     }
 }
