@@ -35,13 +35,34 @@ module.exports = {
     isValidPassword: async (req,res,next) => {
         const {user} = await User.authenticate()(req.user.username, req.body.currentPassword);
         if(user){
-            //add user to res.user to let it accessible everywhere
+            //add user to res.local to let it accessible everywhere
             res.locals.user = user;
             return next();
         } else{
             req.session.error = "Incorrect current password!";
             return res.redirect("/profile");
+        }        
+    },
+    changePassword: async (req,res,next) => {
+        const {
+            newPassword,
+            passwordConfirmation
+        } = req.body;
+        if(newPassword && !passwordConfirmation){
+            req.session.error = "Missing password confirmation!";
+            return res.redirect('/profile');
+        }else if(newPassword && passwordConfirmation) {
+            const {user}= res.locals;
+            if(newPassword === passwordConfirmation){
+                await user.setPassword(newPassword);
+                next();
+            } else{
+                req.session.error = "New passwords must match!";
+                return res.redirect("/profile");
+            }
+        } else {
+            //go to next middleware
+            next();
         }
-        
     }
 }

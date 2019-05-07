@@ -1,6 +1,6 @@
 let newPasswordValue;
 let confirmationValue;
-const form = document.querySelector('form');
+const submitBtn = document.getElementById('update_profile');
 const newPassword = document.getElementById("new-password");
 const confirmation = document.getElementById("password-confirmation");
 const validationMessage = document.getElementById("validation-message");
