@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const { asyncErrorHandler, isLoggedIn, isValidPassword, changePassword } = require('../middlewares/index');
+const multer = require('multer');
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
 const { 
   postRegister, 
   postLogin, 
@@ -11,14 +15,13 @@ const {
   updateProfile
   } = require('../controllers/index');
 //const { asyncErrorHandler,checkIfUserExist } = require('../middlewares/index');
-const { asyncErrorHandler, isLoggedIn, isValidPassword, changePassword } = require('../middlewares/index');
 
 
 /* GET home/landing page. */
 router.get('/', asyncErrorHandler(landingPage));
 
 /* Get register */
-router.get('/register', getRegister);
+router.get('/register', upload.single('image'), getRegister);
 
 /* Post register */
 router.post('/register',
@@ -40,7 +43,8 @@ router.get('/profile',isLoggedIn, asyncErrorHandler(getProfile));
 
 /* PUT /profile/ */
 router.put('/profile',
-	isLoggedIn,
+  isLoggedIn,
+  upload.single('image'),
 	asyncErrorHandler(isValidPassword),
 	asyncErrorHandler(changePassword),
 	asyncErrorHandler(updateProfile)

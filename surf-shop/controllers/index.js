@@ -3,6 +3,8 @@ const Post = require('../models/post');
 const passport = require('passport');
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const util = require('util');
+const {cloudinary} = require('../cloudinary');
+const {deleteProfileImage} = require('../middlewares');
 
 module.exports = {
     //GET /
@@ -18,6 +20,10 @@ module.exports = {
     async postRegister(req,res,next){
         console.log('registering user');
         try{
+            if(req.file){
+                const {secure_url, public_id}= req.file;
+                req.body.image ={secure_url, public_id };
+            }
             const user =  await User.register(new User(req.body), req.body.password);
             req.login(user, function(err){
                 if(err) {
@@ -27,6 +33,7 @@ module.exports = {
                 res.redirect('/');
             });
         }catch(err){
+            deleteProfileImage(req);
             const {username,email} = req.body;
             let error = err.message;
             console.log(error);
@@ -81,6 +88,11 @@ module.exports = {
             user.password = password;
         if(email)    
             user.email = email;
+        if(req.file) {
+            if(user.image.public_id) await cloudinary.v2.uploader.destroy(user.image.public_id);//delete existing image if exist
+            const {secure_url, public_id} = req.file; //get from new image upload
+            user.image = {secure_url, public_id};
+        }
         await user.save();
         const login = util.promisify(req.login.bind(req));
         await login(user);
