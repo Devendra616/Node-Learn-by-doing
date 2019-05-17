@@ -12,7 +12,11 @@ const {
   getRegister, 
   getLogin,
   getProfile,
-  updateProfile
+  updateProfile,
+  getForgotPw,
+  putForgotPw,
+  getResetPw,
+  putReset
   } = require('../controllers/index');
 //const { asyncErrorHandler,checkIfUserExist } = require('../middlewares/index');
 
@@ -51,22 +55,14 @@ router.put('/profile',
 );
 
 /* Get /forgot */
-router.get('/forgot', (req, res, next) => {
-  res.send("GET /forgot")
-});
+router.get('/forgot-password', getForgotPw);
 
 /* PUT /forgot */
-router.put('/forgot', (req, res, next) => {
-  res.send("PUT  /forgot")
-});
+router.put('/forgot-password', asyncErrorHandler(putForgotPw));
 
 /* Get /reset/:token */
-router.get('/reset/:token', (req, res, next) => {
-  res.send("GET /reset/:token")
-});
+router.get('/reset/:token', asyncErrorHandler(getResetPw));
 
 /* PUT /profile/:token */
-router.put('/reset/:token', (req, res, next) => {
-  res.send("PUT  /reset/:token")
-});
+router.put('/reset/:token',asyncErrorHandler(putForgotPw));
 module.exports = router;   
