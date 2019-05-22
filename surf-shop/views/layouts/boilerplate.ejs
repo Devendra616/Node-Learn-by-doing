@@ -14,7 +14,10 @@
         <% include ../partials/navbar %>
         <% include ../partials/flash-messages %>
         <%- body -%>
-        <script src="/javscripts/post-index.js"></script>
+        <% if(title === 'Post Index') { %
+          <script src="/javscripts/post-index.js"></script>
+        <% } %>
+        
   </body>
 </html>
     
