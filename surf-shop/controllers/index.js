@@ -11,10 +11,13 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = {
     //GET /
-    async landingPage(req,res,next){
-        const posts = await Post.find({});
-        res.render('index',{posts,mapBoxToken,title: 'Surf Shop - Home'});
+    async landingPage(req,res,next) {
+        //sort posts in descending order -_id
+        const posts = await Post.find({}).sort('-_id').exec();
+        const recentPosts = posts.slice(0, 3); //get top 3 posts
+        res.render('index', { posts, mapBoxToken, recentPosts, title: 'Surf Shop - Home' });
     },
+    
     //GET /registger
     getRegister(req,res,next){
         res.render('register',{title:'Register',username: '', email: ''});

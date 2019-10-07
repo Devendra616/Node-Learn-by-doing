@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-4">
+        <div class="col-4">            
             <% include ../partials/searchFilter %>
         </div>
         <div class="col-8">
@@ -18,7 +18,7 @@
     <div>Price: <%= post.price %></div>
     <div>Description: <%= post.description %></div>
     <div>Location: <%= post.location %></div>
-    <div><a href='/posts/<%=post.id %>'>View More</a></div>
+    <div><a href='/posts/<%= post.id %>'>View More</a></div>
 </div>
 <% }); %>
 <% include ../partials/paginatePost %>

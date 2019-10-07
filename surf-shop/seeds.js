@@ -19,7 +19,12 @@ async function seedPosts() {
 			},
 			price: random1000,
 			avgRating: random5,
-			author:'5bb27cd1f986d278582aa58c'
+			author:'5cb0d895d30869426cf5dc5f', //user from db
+			images : [
+				{
+					url: 'https://res.cloudinary.com/nmdc/image/upload/v1570453635/surfboard.jpg'
+				}
+			]
 		}
 		let post = new Post(postData);
 		post.properties.description = `<strong><a href="/posts/${post._id}">${title}</a></strong><p>${post.location}</p><p>${description.substring(0, 20)}...</p>`;

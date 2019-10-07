@@ -12,15 +12,14 @@ const logger = require('morgan');
 const User = require('./models/user');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+const app = express();
 // const seedPosts = require('./seeds');
-// seedPosts();
+ //seedPosts();
 
 //require routes
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
 const reviewsRouter = require('./routes/reviews');
-
-const app = express();
 
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 
@@ -47,6 +46,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+
+//Add moment to every view
+app.locals.moment = require('moment');
 
 //configure passport and session
 app.use(session({
