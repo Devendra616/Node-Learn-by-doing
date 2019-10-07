@@ -1,4 +1,5 @@
 <% layout('layouts/boilerplate') -%>
+<!--
 <form action="/login" method="post">
 <div>
     <label for="username">Username:</label>
@@ -12,3 +13,27 @@
 </form>
 
 <div><a href="/forgot-password">Forgot Password?</a></div>
+-->
+
+<div class="container m-b-10">
+    <div class="row">
+        <div class="col-md-12">           
+            <h4 class="title">Login</h4>
+               <form class='row' data-aos="fade-left" data-aos-duration="1200" action="/login" method="post">
+                    <div class="form-group col-md-6">
+                        <label for="username">User Name</label>                            
+                        <input class="form-control" type="text" name="username" id="username" placeholder="username"  required>                                
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="password">Password</label>                                 
+                        <input class="form-control" type="password" name="password" id="password" placeholder="password" required>
+                    </div>                           
+                    
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-success-gradiant m-t-20 btn-arrow"><span> LOGIN <i class="ti-arrow-right"></i></span></button>
+                        <a href="/forgot-password" class="vb">Forgot Password?</a>                     
+                    </div>            
+                </form>
+            </div>
+        </div>      
+</div>

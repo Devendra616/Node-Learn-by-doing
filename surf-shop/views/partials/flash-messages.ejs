@@ -1,7 +1,18 @@
-<% if(success && success.length) { %>
-    <h1 class='color-green'><%= success %></h1>
-<% } %>    
-
-<% if(error && error.length) { %>
-    <h1 class="color-red"><%= error %></h1>
-<% } %>    
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <% if(success && success.length) { %>
+                <div class='alert alert-success'><%= success %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                </div>    
+            <% } %>    
+            
+            <% if(error && error.length) { %>
+                <div class="alert alert-danger"><%= error %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+    
