@@ -13,8 +13,8 @@ const User = require('./models/user');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const app = express();
-// const seedPosts = require('./seeds');
- //seedPosts();
+ //const seedPosts = require('./seeds');
+//seedPosts();
 
 //require routes
 const indexRouter = require('./routes/index');
@@ -24,7 +24,8 @@ const reviewsRouter = require('./routes/reviews');
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 
 //connect to the database
-mongoose.connect('mongodb://localhost/surf-shop',{useNewUrlParser: true, useCreateIndex:true});
+const dbURL = `mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@ds333098.mlab.com:33098/surf-shop`||"mongodb://localhost/surf-shop";
+mongoose.connect(dbURL,{useNewUrlParser: true, useCreateIndex:true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open',() =>{
